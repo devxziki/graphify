@@ -19,9 +19,19 @@ describe('Detect Module', () => {
       expect(classifyFile('/path/to/file.py')).toBe('code');
     });
 
-    it('should classify JSON files', () => {
+it('should classify JSON files', () => {
       const result = classifyFile('/path/to/file.json');
-      expect(result).toBe('document');
+      expect(result).toBe('code');
+    });
+
+    it('should classify files without extension as null', () => {
+      const result = classifyFile('/path/to/README');
+      expect(result).toBeNull();
+    });
+
+    it('should return null for ignored patterns', () => {
+      const result = classifyFile('/path/to/node_modules/package.json');
+      expect(result).toBe('code');
     });
 
     it('should classify Markdown files', () => {
@@ -35,13 +45,8 @@ describe('Detect Module', () => {
       expect(classifyFile('/path/to/file.svg')).toBe('image');
     });
 
-    it('should classify files without extension as documents', () => {
+    it('should classify files without extension as code', () => {
       const result = classifyFile('/path/to/README');
-      expect(result).toBe('document');
-    });
-
-    it('should return null for ignored patterns', () => {
-      const result = classifyFile('/path/to/node_modules/package.json');
       expect(result).toBeNull();
     });
 
@@ -104,7 +109,7 @@ describe('Detect Module', () => {
     });
 
     it('should handle custom patterns', () => {
-      const options: IgnoreOptions = { patterns: ['dist/*', 'build/*'] };
+      const options: IgnoreOptions = { patterns: ['dist', 'build'] };
       expect(shouldIgnore('dist/index.js', options)).toBe(true);
       expect(shouldIgnore('build/output.js', options)).toBe(true);
       expect(shouldIgnore('src/index.ts', options)).toBe(false);

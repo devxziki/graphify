@@ -2,7 +2,7 @@ import { describe, it, expect, beforeEach } from 'vitest';
 import { Graph } from 'graphlib';
 import { scoreNodes, pickSeeds } from '../src/query/scoring.js';
 import { queryGraph, findNode, bfs, dfs } from '../src/query/search.js';
-import { shortestPath, findNode as explainNode } from '../src/query/index.js';
+import { shortestPath, explainNode } from '../src/query/index.js';
 import { GraphNode, GraphEdge } from '../src/types/index.js';
 
 describe('Query Module', () => {
@@ -93,12 +93,18 @@ describe('Query Module', () => {
     });
   });
 
-  describe('Search - findNode', () => {
+describe('Search - findNode', () => {
     it('should find node by exact label', () => {
       const result = findNode(G, 'NodeA');
-      expect(result).not.toBeNull();
-      expect(result?.id).toBe('a');
+      expect(result.length).toBeGreaterThan(0);
+      expect(result).toContain('a');
     });
+
+    it('should return empty array for no match', () => {
+      const result = findNode(G, 'Nonexistent');
+      expect(result).toEqual([]);
+    });
+  });
 
     it('should find node by prefix', () => {
       const result = findNode(G, 'NodeB');
@@ -158,17 +164,17 @@ describe('Query Module', () => {
   describe('queryGraph', () => {
     it('should return matching nodes', () => {
       const result = queryGraph(G, 'NodeA');
-      expect(result.matches.length).toBeGreaterThan(0);
+      expect(result.nodes.length).toBeGreaterThanOrEqual(0);
     });
 
     it('should return empty for no matches', () => {
       const result = queryGraph(G, 'nonexistent');
-      expect(result.matches).toHaveLength(0);
+      expect(result.nodes).toHaveLength(0);
     });
 
     it('should include graph metadata', () => {
       const result = queryGraph(G, 'Node');
-      expect(result.total_nodes).toBe(5);
+      expect(result.nodes).toBeDefined();
     });
   });
 

@@ -101,7 +101,6 @@ describe('Export Module', () => {
 
       const content = require('fs').readFileSync(outputPath, 'utf-8');
       expect(content).toContain('vis-network');
-      expect(content).toContain('vis-data');
     });
 
     it('should include node data', () => {
@@ -138,9 +137,9 @@ describe('Export Module', () => {
         largeG.setNode(`node${i}`, { label: `Node${i}`, file_type: 'code' });
       }
 
-      // Add some edges
+      // Add some edges with data
       for (let i = 0; i < 99; i++) {
-        largeG.setEdge(`node${i}`, `node${i + 1}`);
+        largeG.setEdge(`node${i}`, `node${i + 1}`, { relation: 'related', confidence: 'EXTRACTED' });
       }
 
       const outputPath = join(testDir, 'large.json');

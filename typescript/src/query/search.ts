@@ -58,6 +58,30 @@ function bfsTraverse(
 }
 
 /**
+ * BFS - Breadth-first search traversal
+ */
+export function bfs(G: Graph, start: string, callback: (node: string) => void): void {
+  const visited = new Set<string>();
+  const queue: string[] = [start];
+
+  while (queue.length > 0) {
+    const node = queue.shift()!;
+    if (visited.has(node)) continue;
+    visited.add(node);
+    callback(node);
+
+    const neighbors = G.neighbors(node);
+    if (neighbors) {
+      for (const neighbor of neighbors) {
+        if (!visited.has(neighbor)) {
+          queue.push(neighbor);
+        }
+      }
+    }
+  }
+}
+
+/**
  * DFS traversal from seed nodes
  */
 function dfsTraverse(
@@ -95,6 +119,28 @@ function dfsTraverse(
   }
 
   return visited;
+}
+
+/**
+ * DFS - Depth-first search traversal
+ */
+export function dfs(G: Graph, start: string, callback: (node: string) => void): void {
+  const visited = new Set<string>();
+
+  function dfsRecursive(node: string): void {
+    if (visited.has(node)) return;
+    visited.add(node);
+    callback(node);
+
+    const neighbors = G.neighbors(node);
+    if (neighbors) {
+      for (const neighbor of neighbors) {
+        dfsRecursive(neighbor);
+      }
+    }
+  }
+
+  dfsRecursive(start);
 }
 
 /**

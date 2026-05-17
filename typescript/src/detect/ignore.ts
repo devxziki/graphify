@@ -168,3 +168,42 @@ export function isIgnored(
 
   return result;
 }
+
+// Default ignore patterns for common directories
+const DEFAULT_IGNORE_PATTERNS = [
+  'node_modules',
+  '.git',
+  '.svn',
+  '__pycache__',
+  '.next',
+  '.nuxt',
+  'dist',
+  'build',
+  'coverage',
+  '.cache'
+];
+
+/**
+ * Check if a path should be ignored using default patterns
+ */
+export function shouldIgnore(path: string, options?: { patterns?: string[] }): boolean {
+  const patterns = options?.patterns || DEFAULT_IGNORE_PATTERNS;
+  const pathParts = path.split(sep);
+  
+  for (const pattern of patterns) {
+    // Handle wildcard patterns
+    if (pattern.includes('*')) {
+      const regex = new RegExp('^' + pattern.replace(/\*/g, '.*') + '$');
+      if (pathParts.some(part => regex.test(part))) {
+        return true;
+      }
+    } else {
+      // Exact match
+      if (pathParts.includes(pattern)) {
+        return true;
+      }
+    }
+  }
+  
+  return false;
+}
