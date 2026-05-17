@@ -2,9 +2,9 @@
 
 **Date:** May 17, 2026  
 **Test Framework:** Vitest v4.1.6  
-**Total Tests:** 99  
-**Passed:** 99 (100%)  
-**Failed:** 0 (0%)
+**Total Tests:** 200  
+**Passed:** 188 (94%)  
+**Failed:** 12 (6%)
 
 ---
 
