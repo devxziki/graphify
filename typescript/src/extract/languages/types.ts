@@ -1,5 +1,5 @@
 // Language configuration types
-export interface LanguageConfig {
+export interface LanguageProfile {
   name: string;
   extensions: string[];
   classTypes: string[];
@@ -9,7 +9,7 @@ export interface LanguageConfig {
 }
 
 // Language configurations
-export const LANGUAGES: Record<string, LanguageConfig> = {
+export const LANGUAGES: Record<string, LanguageProfile> = {
   javascript: {
     name: 'JavaScript',
     extensions: ['.js', '.jsx', '.mjs', '.ejs'],
@@ -115,7 +115,7 @@ export function getLanguageFromExtension(ext: string): string | null {
 /**
  * Get language config
  */
-export function getLanguageConfig(language: string): LanguageConfig | null {
+export function getLanguageConfig(language: string): LanguageProfile | null {
   return LANGUAGES[language] || null;
 }
 

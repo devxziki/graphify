@@ -1,26 +1,44 @@
 // Query module - Graph queries and path finding
-import { Graph, alg } from 'graphlib';
+import { Graph } from 'graphlib';
 import { queryGraph, findNode, QueryResult } from './search.js';
 import { scoreNodes } from './scoring.js';
 import { GraphNode, NodeExplanation } from '../types/index.js';
 import { edgeData } from '../build/index.js';
-import { graphDegrees } from '../utils/graphlib.js';
+import { graphDegrees, graphNeighbors } from '../utils/graphlib.js';
 
 /**
- * Find shortest path between two nodes
+ * Find shortest path between two nodes using BFS
  */
 export function shortestPath(
   G: Graph,
   from: string,
   to: string
 ): string[] {
-  try {
-    // Use graphlib's shortest path
-    const path = alg.shortestPath(G, from, to);
-    return path || [];
-  } catch {
-    return [];
+  if (from === to) return [from];
+
+  const visited = new Set<string>();
+  const queue: Array<{ node: string; path: string[] }> = [];
+  
+  visited.add(from);
+  queue.push({ node: from, path: [from] });
+
+  while (queue.length > 0) {
+    const { node, path } = queue.shift()!;
+    
+    const neighbors = graphNeighbors(G, node);
+    for (const neighbor of neighbors) {
+      if (neighbor === to) {
+        return [...path, neighbor];
+      }
+      
+      if (!visited.has(neighbor)) {
+        visited.add(neighbor);
+        queue.push({ node: neighbor, path: [...path, neighbor] });
+      }
+    }
   }
+
+  return [];
 }
 
 /**

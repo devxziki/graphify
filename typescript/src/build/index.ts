@@ -37,11 +37,9 @@ export function normalizeId(s: string): string {
   // NFKC normalization
   let normalized = s.normalize('NFKC');
   // Replace non-word chars with underscore
-  normalized = normalized.replace(/[^\w]+/g, '_');
-  // Collapse multiple underscores
+normalized = normalized.replace(/[^\w]+/g, '_');
   normalized = normalized.replace(/_+/g, '_');
-  // Trim and lowercase
-  return normalized.trim('_').toLowerCase();
+  return normalized.replace(/^_+|_+$/g, '').toLowerCase();
 }
 
 /**

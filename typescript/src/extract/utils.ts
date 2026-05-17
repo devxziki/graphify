@@ -22,7 +22,7 @@ export function makeId(...parts: string[]): string {
   combined = combined.replace(/_+/g, '_');
 
   // Trim and lowercase
-  return combined.trim('_').toLowerCase();
+  return combined.replace(/^_+|_+$/g, '').toLowerCase();
 }
 
 /**
