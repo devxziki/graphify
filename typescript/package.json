@@ -1,0 +1,37 @@
+{
+  "name": "graphify-ts",
+  "version": "1.0.0",
+  "description": "TypeScript implementation of graphify - extract code structure → build graph → generate HTML visualization",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "bin": {
+    "graphify": "./bin/graphify.js"
+  },
+  "scripts": {
+    "build": "tsc",
+    "dev": "ts-node bin/graphify.js",
+    "test": "echo \"Tests not implemented yet\" && exit 0"
+  },
+  "keywords": [
+    "graph",
+    "knowledge-graph",
+    "code-analysis",
+    "ast",
+    "tree-sitter",
+    "visualization"
+  ],
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "graphlib": "^2.1.8",
+    "commander": "^11.1.0",
+    "chokidar": "^3.5.3",
+    "picomatch": "^4.0.0"
+  },
+  "devDependencies": {
+    "@types/node": "^20.10.0",
+    "@types/graphlib": "^2.1.8",
+    "typescript": "^5.3.3",
+    "ts-node": "^10.9.2"
+  }
+}
