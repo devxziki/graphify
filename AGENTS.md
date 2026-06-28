@@ -1,29 +1,36 @@
-## graphify
+# graphify
 
 Multi-language knowledge graph project for code analysis.
 
-### Project Structure
+## Project Structure
 
 ```
 graphify/
-├── python/           # Python implementation (original graphify)
-│   ├── graphify/     # Python source code
-│   ├── tests/        # Python tests
-│   ├── docs/         # Documentation
-│   └── worked/       # Sample analyzed projects
+├── typescript/       TypeScript implementation (complete)
+│   ├── src/          Source code
+│   ├── bin/          CLI entry point
+│   └── package.json
 │
-├── typescript/       # TypeScript implementation (coming soon)
-├── go/              # Go implementation (coming soon)
-├── rust/             # Rust implementation (coming soon)
-└── java/             # Java implementation (coming soon)
+├── python/           Python implementation (original, forked from safishamsi/graphify)
+│   ├── graphify/     Python source code
+│   ├── tests/        Python tests
+│   ├── docs/         Documentation
+│   └── worked/       Sample analyzed projects
+│
+├── README.md         This file
+├── AGENTS.md         This file
+└── ARCHITECTURE.md   Pipeline and module architecture
 ```
 
-### For Python (Current)
+## For TypeScript
 
-- The Python graphify code is in `python/graphify/`
+- TypeScript port is complete
+- Build: `cd typescript && npm install && npm run build`
+- CLI: `node typescript/bin/graphify.js build <path> -o <output>`
+- Tests: `cd typescript && npm test`
+
+## For Python
+
+- Python graphify code is in `python/graphify/`
 - Run from `python/` directory: `cd python && pip install -e .`
 - Tests: `cd python && pytest tests/`
-
-### For TypeScript (Coming Soon)
-
-- Coming soon - will be built by analyzing the Python code and porting to TypeScript
